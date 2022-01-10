@@ -1,3 +1,5 @@
+@section('title', 'Social Media App - Login Page')
+
 <div class="min-h-screen hero bg-base-200">
     <div class="flex-col justify-center hero-content">
       <div class="text-left">
@@ -14,24 +16,51 @@
             <label class="label">
               <span class="label-text">Email</span>
             </label>
-            <input type="text" placeholder="Input your email" class="input input-bordered">
+            <input wire:model.lazy='email' type="text" placeholder="Input your email" class="input input-bordered @error('email')
+                input-error
+            @enderror">
+            @error('email')
+                <span class="text-error">{{ $message }}</span>
+            @enderror
           </div>
           <div class="form-control">
             <label class="label">
               <span class="label-text">Password</span>
             </label>
-            <input type="text" placeholder="Input your password" class="input input-bordered">
+            <input wire:model.lazy='password' type="password" placeholder="Input your password" class="input input-bordered @error('password')
+                input-error
+            @enderror">
+            @error('password')
+                <span class="text-error">{{ $message }}</span>
+            @enderror
             <label class="label">
               <a href="#" class="label-text-alt">Forgot password?</a>
             </label>
           </div>
           <div class="mt-6 form-control">
-            <button class="btn btn-primary">Login</button>
-          </div>
+            <button wire:click='login' wire:loading.remove class="btn btn-primary">Login</button>
+            <button wire:loading wire:target='login' class="btn btn-primary loading" disabled>Login ...</button>
+
+        </div>
         </div>
       </div>
       <div class="mt-2 mb-3">
         <a href="{{ route('auth.signup') }}" class="text-1xl">Don't have any account ?</a>
     </div>
     </div>
-  </div>
+
+    @if ($isRedirect)
+        <script>
+            setTimeout(function () {
+                window.location.href = "{{ route('home') }}";
+            }, 4000);
+        </script>
+    @endif
+
+    @if (Auth::check())
+        <script>
+            window.location.href = "{{ route('home') }}";
+        </script>
+    @endif
+</div>
+
