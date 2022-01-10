@@ -1,3 +1,4 @@
+@section('title', 'Social Media App - Signup Page')
 <div class="min-h-screen hero bg-base-200">
     <div class="flex-col justify-center hero-content">
       <div class="text-left">
@@ -10,8 +11,69 @@
       </div>
       <div class="flex-shrink-0 w-full max-w-sm shadow-2xl card bg-base-100">
         <div class="card-body">
+
+            @if ($errors->any())
+                <div class="alert alert-error">
+                    <div class="flex-1">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="w-6 h-6 mx-2 stroke-current">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
+                        </svg>
+                        <label>Oppss, something error. check your form registration</label>
+                    </div>
+                </div>
+            @endif
+
             @if ($isNextForm)
-                Tes Form
+                <div class="form-control">
+                    <label class="label">
+                        <span class="label-text">Name</span>
+                    </label>
+                    <input type="text" wire:model.lazy='name' placeholder="Input your name" class="input input-bordered @error('name')
+                        input-error
+                    @enderror">
+                    @error('name')
+                        <span class="text-error">{{ $message }}</span>
+                    @enderror
+                </div>
+                <div class="form-control">
+                    <label class="label">
+                        <span class="label-text">Gender</span>
+                    </label>
+                    <select wire:model.lazy='gender' class="select select-bordered @error('gender')
+                        select-error
+                    @enderror">
+                        <option value="">Choose</option>
+                        <option value="male">Male</option>
+                        <option value="female">Female</option>
+
+                    </select>
+                    @error('gender')
+                        <span class="select-error">{{ $message }}</span>
+                    @enderror
+                </div>
+                <div class="form-control">
+                    <label class="label">
+                        <span class="label-text">Birthday</span>
+                    </label>
+                    <input type="date" wire:model.lazy='birthday' placeholder="Input your birthday" class="input input-bordered @error('birthday')
+                        input-error
+                    @enderror">
+                    @error('birthday')
+                        <span class="text-error">{{ $message }}</span>
+                    @enderror
+                </div>
+
+                @if ($isSubmit)
+                    <div class="flex justify-between mt-6">
+                        <button wire:click='$set("isNextForm", false)' class="btn btn-primary">Previous</button>
+                        <button wire:loading.remove wire:click='save' class="btn btn-primary">Submit</button>
+                        <button wire:loading wire:target='save' class="btn btn-primary loading" disabled>Submitting..</button>
+                    </div>
+                @else
+                    <div class="mt-6 form-control">
+                        <button wire:click='$set("isNextForm", false)' class="btn btn-primary">Previous</button>
+                    </div>
+                @endif
             @else
                 <div class="form-control">
                     <label class="label">
@@ -99,8 +161,18 @@
             @endif
         </div>
       </div>
-      <div class="mt-2 mb-3">
-        <a href="{{ route('auth.signin') }}" class="text-1xl">Already have an account ?</a>
+        @if (!$isNextForm)
+        <div class="mt-2 mb-3">
+            <a href="{{ route('auth.signin') }}" class="text-1xl">Already have an account ?</a>
+        </div>
+        @endif
+
+        @if (Auth::check())
+        <script>
+            window.location.href = "{{ route('home') }}";
+        </script>
+    @endif
     </div>
-    </div>
-  </div>
+</div>
+
+
