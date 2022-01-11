@@ -27,3 +27,4 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/', Home::class)->name('home');
 });
 
+

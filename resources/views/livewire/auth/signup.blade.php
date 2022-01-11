@@ -162,11 +162,10 @@
         </div>
       </div>
         @if (!$isNextForm)
-        <div class="mt-2 mb-3">
-            <a href="{{ route('auth.signin') }}" class="text-1xl">Already have an account ?</a>
-        </div>
+            <div class="mt-2 mb-3">
+                <a href="{{ route('auth.signin') }}" class="text-1xl">Already have an account ?</a>
+            </div>
         @endif
-
         @if (Auth::check())
         <script>
             window.location.href = "{{ route('home') }}";
