@@ -1,8 +1,16 @@
-<div class="grid grid-flow-col grid-rows-3 gap-4 py-10 mx:10 md:mx-20">
-    <div class="col-span-1 row-span-3 shadow-lg bg-base-300">
-        <div>1</div>
+<div class="flex flex-wrap justify-between h-screen gap-4 py-20 mx-10">
+    <div class="rounded-lg shadow-lg w-60 h-80 bg-base-300">
+        <!-- Navbar -->
+
     </div>
-    <div class="h-10 col-span-3 shadow-lg bg-base-300"></div>
-    <div class="col-span-3 row-span-2 shadow-lg bg-base-300">03</div>
-    <div class="col-span-2 row-span-3 shadow-lg bg-base-300">03</div>
-  </div>
+    @livewire('components.posts.add-post')
+    <div class="max-w-2xl rounded-lg shadow-lg w-80 h-80 bg-base-300">
+        <!-- Profile -->
+    </div>
+
+    <div class="max-w-2xl rounded-lg shadow-2xl w-96 h-80 bg-base-200" style="width: 640px; margin-left:21%; margin-top:-6%; ">
+        <!-- Status -->
+    </div>
+
+
+</div>
