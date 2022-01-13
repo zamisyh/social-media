@@ -8,7 +8,7 @@
                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
                  </svg>
                  <p class="pt-2 ml-2 text-sm tracking-wider text-gray-400 group-hover:text-gray-600">
-                     File</p>
+                     Uploads</p>
              </div>
              <input type="file" class="opacity-0" />
          </label>
