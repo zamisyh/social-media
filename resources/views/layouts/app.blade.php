@@ -36,7 +36,7 @@
 
         <script>
             Livewire.on('changeThemeOn', themeId => {
-
+                alert('Tes' + themeId);
             })
         </script>
     </body>
