@@ -13,6 +13,22 @@
       <div class="flex-shrink-0 w-full max-w-sm shadow-2xl card bg-base-100">
         <div class="card-body">
           <div class="form-control">
+            @if (session()->has('message'))
+             <div class="alert alert-success" x-data="{show: false}" :class="{'hidden' : show === true}">
+                <div class="flex-1">
+                    <label>Succesfully logout</label>
+                  </div>
+                  <div class="flex-none">
+                      <svg role="button" @click="show = true" xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 mx-2 hide" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                      </svg>
+                  </div>
+            </div>
+            @endif
+
+
+          </div>
+          <div class="form-control">
             <label class="label">
               <span class="label-text">Email</span>
             </label>

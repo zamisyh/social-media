@@ -11,7 +11,7 @@
                 <a @click.prevent="tab = 'settings'" href="{{ route('home') }}" class="text-xl text-gray-400" :class="{'text-blue-400' : tab === 'settings'}">Settings</a>
             </li>
             <li class="mt-3">
-                <a @click.prevent="tab = 'logout'" href="{{ route('home') }}" class="text-xl text-gray-400" :class="{'text-blue-400' : tab === 'logout'}">Logout</a>
+                <a @click.prevent="tab = 'logout'" wire:click='logout' role="button" class="text-xl text-gray-400" :class="{'text-blue-400' : tab === 'logout'}">Logout</a>
             </li>
         </ul>
     </nav>
