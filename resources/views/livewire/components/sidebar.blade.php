@@ -1,4 +1,4 @@
-<div x-data="{ tab: 'home' }" class="flex items-center px-10 py-5 rounded-lg shadow-lg w-60 h-80 bg-base-100">
+<div x-data="{ tab: 'home' }" class="flex items-center px-10 py-5 rounded-lg shadow-lg w-60 h-60 bg-base-100">
     <nav>
         <ul>
             <li>
