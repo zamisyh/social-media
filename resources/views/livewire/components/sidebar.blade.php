@@ -1,17 +1,17 @@
-<div x-data="{ tab: 'home' }" class="flex items-center px-10 py-5 rounded-lg shadow-lg w-60 h-60 bg-base-100">
+<div class="flex items-center px-10 py-5 rounded-lg shadow-lg w-60 h-60 bg-base-100">
     <nav>
         <ul>
             <li>
-                <a @click.prevent="tab = 'home'" href="{{ route('home') }}" class="text-xl text-gray-400" :class="{'text-blue-400' : tab === 'home'}">Home</a>
+                <a href="{{ route('home') }}" class="text-xl text-gray-400">Home</a>
             </li>
             <li class="mt-3">
-                <a @click.prevent="tab = 'profile'" href="{{ route('home') }}" class="text-xl text-gray-400" :class="{'text-blue-400' : tab === 'profile'}">Profile</a>
+                <a href="{{ route('update.profile') }}" class="text-xl text-gray-400">Profile</a>
             </li>
             <li class="mt-3">
-                <a @click.prevent="tab = 'settings'" href="{{ route('home') }}" class="text-xl text-gray-400" :class="{'text-blue-400' : tab === 'settings'}">Settings</a>
+                <a href="{{ route('home') }}" class="text-xl text-gray-400">Settings</a>
             </li>
             <li class="mt-3">
-                <a @click.prevent="tab = 'logout'" wire:click='logout' role="button" class="text-xl text-gray-400" :class="{'text-blue-400' : tab === 'logout'}">Logout</a>
+                <a wire:click='logout' role="button" class="text-xl text-gray-400">Logout</a>
             </li>
         </ul>
     </nav>

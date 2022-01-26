@@ -7,9 +7,9 @@ use Livewire\Component;
 
 class Sidebar extends Component
 {
-
     public function render()
     {
+
         return view('livewire.components.sidebar')->extends('layouts.app')->section('content');
     }
 
@@ -19,4 +19,5 @@ class Sidebar extends Component
         session()->flash('message', 'Succesfully logout');
         return redirect()->route('auth.signin');
     }
+
 }
