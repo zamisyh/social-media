@@ -23,6 +23,7 @@ class CreateProfilesTable extends Migration
             $table->text('bio')->nullable();
             $table->text('address')->nullable();
             $table->text('website')->nullable();
+            $table->text('image')->nullable();
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');

@@ -12,7 +12,9 @@
         <!-- Profile -->
         @livewire('components.profile.index')
 
-        <div class="max-w-2xl rounded-lg shadow-2xl w-96 h-80 bg-base-300" style="width: 630px; margin-left:21%; margin-top:-15%; ">
+        <div
+            class="max-w-2xl rounded-lg shadow-2xl w-96 h-80 bg-base-300"\
+            style="width: 630px; margin-left:21%; margin-top:-15%; ">
             <!-- Status -->
         </div>
 

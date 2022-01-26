@@ -1,8 +1,18 @@
 <div class="max-w-2xl rounded-lg shadow-lg w-80 bg-base-200">
-    <div class="flex justify-center mt-10 avatar placeholder">
-        <div class="w-24 h-24 rounded-full bg-neutral-focus text-neutral-content">
-          <span class="text-xl">{{ ucwords($nameShort) }}</span>
-        </div>
+    <div class="flex justify-center mt-10">
+        @if (!is_null($image))
+            <div class="avatar">
+                <div class="w-24 h-24 rounded-full">
+                    <img src="{{ asset('storage/images/profile/' . $image) }}">
+                </div>
+            </div>
+        @else
+            <div class="avatar placeholder">
+                <div class="w-24 h-24 rounded-full bg-neutral-focus text-neutral-content">
+                    <span class="text-xl">{{ ucwords($nameShort) }}</span>
+                </div>
+            </div>
+        @endif
     </div>
     <div class="flex justify-between mx-10 mt-5 group_info">
         <div class="posts">
@@ -19,10 +29,13 @@
         </div>
     </div>
     <div class="mx-10 mt-5 profile_detail">
+        <div class="text-gray-600 name">
+            {{ $name }}
+        </div>
         <div class="text-gray-400 bio">
            {{ $bio }}
         </div>
-        <div class="mt-2 text-gray-400 address">
+        <div class="text-gray-400 address">
             {{ $address }}
         </div>
         <div class="mt-2 text-blue-400">
@@ -67,6 +80,25 @@
                         @error('website')
                             <span class="text-error">{{ $message }}</span>
                         @enderror
+                    </div>
+                    <div class="form-control">
+                        <label class="label">
+                            <span class="label-text">Image</span>
+                        </label>
+                        <input type="file" wire:model.lazy='img' class="@error('img')
+                            input-error
+                        @enderror">
+                        @error('img')
+                            <span class="text-error">{{ $message }}</span>
+                        @enderror
+
+                        <div class="mt-2">
+                            <div class="avatar">
+                                <div class="w-24 h-24 rounded-full">
+                                    <img src="{{ asset('storage/images/profile/' . $image) }}">
+                                </div>
+                            </div>
+                        </div>
                     </div>
 
                 </div>
