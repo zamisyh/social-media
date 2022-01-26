@@ -5,11 +5,16 @@ namespace App\Http\Livewire\Components\Profile;
 use Livewire\Component;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Profile;
+use Jantinnerezo\LivewireAlert\LivewireAlert;
 
 class Index extends Component
 {
 
-    public $name;
+    use LivewireAlert;
+
+    public $nameShort, $bio, $address, $website;
+    public $closeModal;
 
     public function mount()
     {
@@ -17,11 +22,17 @@ class Index extends Component
         $data->profiles->name;
 
         $words = explode(" ", $data->profiles->name);
-        $this->name = "";
+        $this->nameShort = "";
 
         foreach ($words as $w) {
-            $this->name .= $w[0];
+            $this->nameShort .= $w[0];
         }
+
+        $this->bio = $data->profiles->bio;
+        $this->address = $data->profiles->address;
+        $this->website = $data->profiles->website;
+        $this->user_id = Auth::user()->id;
+
     }
 
     public function render()
@@ -29,4 +40,32 @@ class Index extends Component
         return view('livewire.components.profile.index')->extends('layouts.app')->section('content');
     }
 
+    public function updateProfile($id)
+    {
+
+        $this->validate([
+            'bio' => 'required',
+            'address' => 'required',
+            'website' => 'required|url'
+        ]);
+
+       try {
+            Profile::updateOrCreate([
+                'user_id' => $id
+            ],[
+                'bio' => $this->bio,
+                'address' => $this->address,
+                'website' => $this->website
+            ]);
+
+            $this->alert(
+                'success',
+                'Succesfully update profile'
+            );
+
+            $this->closeModal = true;
+       } catch (\Exception $e) {
+           dd($e->getMessage());
+       }
+    }
 }

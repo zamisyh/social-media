@@ -1,7 +1,7 @@
 <div class="max-w-2xl rounded-lg shadow-lg w-80 bg-base-200">
     <div class="flex justify-center mt-10 avatar placeholder">
         <div class="w-24 h-24 rounded-full bg-neutral-focus text-neutral-content">
-          <span class="text-xl">{{ ucwords($name) }}</span>
+          <span class="text-xl">{{ ucwords($nameShort) }}</span>
         </div>
     </div>
     <div class="flex justify-between mx-10 mt-5 group_info">
@@ -20,17 +20,62 @@
     </div>
     <div class="mx-10 mt-5 profile_detail">
         <div class="text-gray-400 bio">
-            Lorem ipsum dolor sit, amet consectetur adipisicing elitss. Aliquam neque
+           {{ $bio }}
         </div>
         <div class="mt-2 text-gray-400 address">
-            Bekasi, Jawa Barat. Indonesia
+            {{ $address }}
         </div>
         <div class="mt-2 text-blue-400">
-            <a href="www.itszami.my.id">www.itszami.my.id</a>
+            <a href="#">{{ $website }}</a>
         </div>
 
         <div class="mt-5">
-            <a href="" class="w-full btn btn-outline btn-primary">Edit Profile</a>
+            <label wire:click='$set("closeModal", false)' for="modal_profile" class="w-full btn btn-outline btn-primary modal-button">Edit Profile</label>
+            <input type="checkbox" id="modal_profile" class="modal-toggle">
+            <div class="modal {{ $closeModal ? 'hidden' : '' }}">
+            <div class="modal-box">
+                <div>
+                    <div class="form-control">
+                        <label class="label">
+                            <span class="label-text">Bio</span>
+                        </label>
+                        <textarea rows="2" wire:model.lazy='bio' class="textarea textarea-bordered @error('bio')
+                            textarea-error
+                        @enderror"></textarea>
+                        @error('bio')
+                            <span class="text-error">{{ $message }}</span>
+                        @enderror
+                    </div>
+                    <div class="form-control">
+                        <label class="label">
+                            <span class="label-text">Address</span>
+                        </label>
+                        <textarea rows="3" wire:model.lazy='address' class="textarea textarea-bordered @error('address')
+                            textarea-error
+                        @enderror"></textarea>
+                        @error('address')
+                            <span class="text-error">{{ $message }}</span>
+                        @enderror
+                    </div>
+                    <div class="form-control">
+                        <label class="label">
+                            <span class="label-text">Website</span>
+                        </label>
+                        <input type="text" wire:model.lazy='website' class="input input-bordered @error('website')
+                            input-error
+                        @enderror">
+                        @error('website')
+                            <span class="text-error">{{ $message }}</span>
+                        @enderror
+                    </div>
+
+                </div>
+                <div class="modal-action">
+                    <button wire:click='updateProfile({{ $user_id }})' for="modal_profile" class="btn btn-primary">Accept</button>
+                    <label for="modal_profile" class="btn">Close</label>
+                </div>
+            </div>
+            </div>
         </div>
     </div>
 </div>
