@@ -24,14 +24,18 @@
         </div>
     </div>
 
-    <div class="flex justify-between p-3 mb-5 rounded-lg shadow-xl bg-base-200" style="margin-top: -3%">
+    <div
+        class="flex justify-between p-3 mb-5 rounded-lg shadow-xl bg-base-200"
+        style="margin-top: -3%"
+        x-data="{open : 'for_you'}"
+        >
         <div class="mx-2">
-            <span class="text-xl text-blue-300">Feeds</span>
+            <span class="text-xl text-blue-400">Feeds</span>
         </div>
         <div class="mx-2 space-x-4">
-            <span class="text-lg text-blue-300 cursor-pointer">For You</span>
-            <span class="text-lg text-gray-400 cursor-pointer">Latest</span>
-            <span class="text-lg text-gray-400 cursor-pointer">Following</span>
+            <span @click.prevent="open = 'for_you'" class="text-lg text-gray-400 cursor-pointer" :class="{'text-blue-400' : open === 'for_you'}">For You</span>
+            <span @click.prevent="open = 'latest'" class="text-lg text-gray-400 cursor-pointer" :class="{'text-blue-400' : open === 'latest'}">Latest</span>
+            <span @click.prevent="open = 'following'" class="text-lg text-gray-400 cursor-pointer" :class="{'text-blue-400' : open === 'following'}">Following</span>
         </div>
     </div>
 
