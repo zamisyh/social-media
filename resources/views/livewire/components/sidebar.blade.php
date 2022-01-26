@@ -2,10 +2,19 @@
     <nav>
         <ul>
             <li>
-                <a href="{{ route('home') }}" class="text-xl text-gray-400">Home</a>
+                <a
+                    href="{{ route('home') }}"
+                    class="text-xl {{ $currentDash === 'home' ? 'text-blue-400' : 'text-gray-400' }}
+                    ">
+                    Home
+                </a>
             </li>
             <li class="mt-3">
-                <a href="{{ route('update.profile') }}" class="text-xl text-gray-400">Profile</a>
+                <a
+                    href="{{ route('update.profile') }}"
+                    class="text-xl {{ $currentDash === 'update.profile' ? 'text-blue-400' : 'text-gray-400' }}">
+                    Profile
+                </a>
             </li>
             <li class="mt-3">
                 <a href="{{ route('home') }}" class="text-xl text-gray-400">Settings</a>
