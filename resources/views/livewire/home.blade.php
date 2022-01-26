@@ -9,9 +9,8 @@
         @livewire('components.sidebar')
         <!-- Add Post -->
         @livewire('components.posts.add-post')
-        <div class="max-w-2xl rounded-lg shadow-lg w-80 h-80 bg-base-300">
-
-        </div>
+        <!-- Profile -->
+        @livewire('components.profile.index')
 
         <div class="max-w-2xl rounded-lg shadow-2xl w-96 h-80 bg-base-200" style="width: 630px; margin-left:21%; margin-top:-12%; ">
             <!-- Status -->

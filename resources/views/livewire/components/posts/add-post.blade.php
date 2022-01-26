@@ -38,5 +38,4 @@
             <span @click.prevent="open = 'following'" class="text-lg text-gray-400 cursor-pointer" :class="{'text-blue-400' : open === 'following'}">Following</span>
         </div>
     </div>
-
  </div>
