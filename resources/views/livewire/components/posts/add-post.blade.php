@@ -1,5 +1,16 @@
 <div class="flex-auto">
-    <textarea rows="3" class="textarea textarea-bordered" style="width: 100%" placeholder="What's on yout mind ?"></textarea>
+    <textarea
+        wire:model.lazy='text' rows="3" class="textarea textarea-bordered @error('text')
+            textarea-error
+        @enderror" style="width: 100%" placeholder="What's on yout mind ?">
+    </textarea>
+    @if ($errors->any())
+        @foreach ($errors->all() as $item)
+            <ul>
+                <li class="text-error">{{ $item }}</li>
+            </ul>
+        @endforeach
+    @endif
     <div class="flex justify-between">
         <div class="flex">
          <label class="cursor-pointer">
@@ -10,22 +21,28 @@
                  <p class="pt-2 ml-2 text-sm tracking-wider text-gray-400 group-hover:text-gray-600">
                      Uploads</p>
              </div>
-             <input type="file" class="opacity-0" />
+             <input wire:model.lazy='file' type="file" class="opacity-0 @error('file')
+                 input-error
+             @enderror" />
          </label>
          </div>
         <div>
-             <select class="select select-bordered">
+             <select wire:model.lazy='type' class="select select-bordered @error('type')
+                select-error
+             @enderror">
                  <option value="">Choose</option>
                  <option value="public">Public</option>
                  <option value="private">Private</option>
                  <option value="friends">Only Friends</option>
              </select>
-             <button class="mt-2 btn btn-primary">Send</button>
+             <button wire:loading.remove wire:click='savePosts({{ Auth::user()->id }})' class="mt-2 btn btn-primary">Send</button>
+             <button wire:loading wire:target='savePosts({{ Auth::user()->id }})' class="mt-2 btn btn-primary" disabled>Sending...</button>
+
         </div>
     </div>
 
     <div
-        class="flex justify-between p-3 mb-5 rounded-lg shadow-xl bg-base-200"
+        class="sticky flex justify-between p-3 mb-5 rounded-lg shadow-xl bg-base-200"
         style="margin-top: -3%"
         x-data="{open : 'for_you'}"
         >

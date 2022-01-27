@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Components\Profile;
 
+use App\Models\Post;
 use Livewire\Component;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
@@ -18,14 +19,17 @@ class Index extends Component
 
     public $nameShort, $bio, $address, $website, $name, $image, $img;
     public $closeModal;
+    public $countPost;
 
     protected $listeners = [
-        'update_profile'
+        'update_profile',
+        'postCreated'
     ];
 
     public function mount()
     {
         $this->getData();
+        $this->getCountPost();
     }
 
     public function render()
@@ -59,6 +63,16 @@ class Index extends Component
         $this->validate([
             'img' => 'file|mimes:png,jpg,jpeg'
         ]);
+    }
+
+    public function getCountPost()
+    {
+        $this->countPost = Post::where('user_id', Auth::user()->id)->count();
+    }
+
+    public function postCreated()
+    {
+        $this->getCountPost();
     }
 
     public function update_profile()

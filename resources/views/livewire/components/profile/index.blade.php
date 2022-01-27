@@ -16,7 +16,7 @@
     </div>
     <div class="flex justify-between mx-10 mt-5 group_info">
         <div class="posts">
-            <div class="text-center text-gray-400 text-md number">0</div>
+            <div class="text-center text-gray-400 text-md number">{{ $countPost }}</div>
             <div class="text-gray-400 text-md title">Posts</div>
         </div>
         <div class="posts">

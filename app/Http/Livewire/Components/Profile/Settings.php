@@ -36,7 +36,6 @@ class Settings extends Component
         ]);
 
         try {
-
             $checkPass = User::where('id', Auth::user()->id)->pluck('password');
             if (Hash::check($this->old_password, $checkPass[0])) {
                 User::where('id', Auth::user()->id)->update([
