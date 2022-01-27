@@ -2,6 +2,7 @@
 
 use App\Http\Livewire\Auth\Signin;
 use App\Http\Livewire\Auth\Signup;
+use App\Http\Livewire\Components\Profile\Settings;
 use App\Http\Livewire\Components\Profile\Update;
 use App\Http\Livewire\Home;
 use Illuminate\Support\Facades\Route;
@@ -26,7 +27,14 @@ Route::prefix('auth')->group(function () {
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/', Home::class)->name('home');
-    Route::get('profile', Update::class)->name('update.profile');
+
+    Route::prefix('profile')->group(function () {
+       Route::name('profile.')->group(function() {
+            Route::get('/', Update::class)->name('home');
+            Route::get('settings', Settings::class)->name('settings');
+       });
+    });
+
 });
 
 

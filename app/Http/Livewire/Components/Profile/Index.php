@@ -75,6 +75,7 @@ class Index extends Component
             'bio' => 'required',
             'address' => 'required',
             'website' => 'required|url',
+            'image' => 'required'
         ]);
 
        try {
