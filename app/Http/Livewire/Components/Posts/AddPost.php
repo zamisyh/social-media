@@ -23,18 +23,20 @@ class AddPost extends Component
         $this->validate([
             'text' => 'required',
             'type' => 'required',
-            'file' => 'required|file|mimes:png,jpg,jpeg,webp'
+            'file' => 'nullable|file|mimes:png,jpg,jpeg,webp'
         ]);
 
         try {
-            $nameFile = 'post-photo' . '-' . rand(10000, 99999) . '-' . time() . '.' . $this->file->getClientOriginalExtension();
-            $this->file->storeAs('public/images/posts', $nameFile);
+            if (!is_null($this->file)) {
+                $nameFile = 'post-photo' . '-' . rand(10000, 99999) . '-' . time() . '.' . $this->file->getClientOriginalExtension();
+                $this->file->storeAs('public/images/posts', $nameFile);
+            }
 
             Post::create([
                 'user_id' => $id,
                 'text' => $this->text,
                 'type' => $this->type,
-                'file' => $nameFile
+                'file' => !is_null($this->file) ? $nameFile : null
             ]);
 
             $this->alert(
@@ -44,6 +46,7 @@ class AddPost extends Component
 
             $this->reset(['text', 'type', 'file']);
             $this->emit('postCreated');
+            $this->emit('getLatestData');
 
 
         } catch (\Throwable $th) {

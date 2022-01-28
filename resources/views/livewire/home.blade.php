@@ -12,6 +12,6 @@
         <!-- Profile -->
         @livewire('components.profile.index')
         <!-- Status -->
-        {{-- @livewire('components.posts.show-posts') --}}
+        @livewire('components.posts.show-posts')
     </div>
 </div>
