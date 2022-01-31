@@ -1,4 +1,4 @@
-<div class="max-w-2xl rounded-lg shadow-lg w-80 bg-base-200">
+<div class="box-border sticky max-w-2xl rounded-lg shadow-lg w-80 bg-base-200">
     <div class="flex justify-center mt-10">
         @if (!is_null($image))
             <div class="avatar">
