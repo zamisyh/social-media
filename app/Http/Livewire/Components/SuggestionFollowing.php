@@ -2,16 +2,20 @@
 
 namespace App\Http\Livewire\Components;
 
+use App\Models\Follow;
 use Livewire\Component;
 use App\Models\Profile;
+use Illuminate\Support\Facades\Auth;
+use Jantinnerezo\LivewireAlert\LivewireAlert;
 
 class SuggestionFollowing extends Component
 {
 
+    use LivewireAlert;
     protected $listeners = ['loadMore'];
 
-    public $data_following;
-    public $amount = 2;
+    public $data_following, $foll;
+    public $amount = 5;
 
 
     public function mount()
@@ -31,7 +35,15 @@ class SuggestionFollowing extends Component
 
     public function loadMore()
     {
-        $this->amount += 2;
+        $this->amount += 3;
         $this->getFollowing();
+    }
+
+    public function follows($id)
+    {
+        $follow = Follow::where('user_id', Auth::user()->id)->first();
+        $follow->users()->attach([
+            'user_id' => $id
+        ]);
     }
 }

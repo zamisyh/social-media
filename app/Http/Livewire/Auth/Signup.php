@@ -7,6 +7,7 @@ use Illuminate\Validation\Rules\Password;
 use Illuminate\Support\Carbon;
 use Livewire\Component;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
+use App\Models\Follow;
 
 
 
@@ -60,6 +61,10 @@ class Signup extends Component
                 'gender' => $this->gender,
                 'birthday' => $this->birthday,
                 'age' => $age
+            ]);
+
+            Follow::create([
+                'user_id' => $user->id
             ]);
 
             $this->alert('success', 'Succesfully created data', [
