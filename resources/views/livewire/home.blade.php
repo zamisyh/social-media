@@ -13,5 +13,8 @@
         @livewire('components.profile.index')
         <!-- Status -->
         @livewire('components.posts.show-posts')
+        <!-- Sugesstion Following -->
+        @livewire('components.suggestion-following')
+
     </div>
 </div>

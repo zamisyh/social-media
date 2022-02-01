@@ -75,6 +75,7 @@ class ShowPosts extends Component
 
         $this->alert('success', 'Succesfully delete post!');
         $this->emit('getLatestData');
+        $this->emit('postCreated');
     }
 
     public function latest()
