@@ -6,6 +6,7 @@ use Livewire\Component;
 use App\Models\Post;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\File;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 
 class ShowPosts extends Component
@@ -16,7 +17,8 @@ class ShowPosts extends Component
     protected $listeners = [
         'getLatestData',
         'confirmed',
-        'canceled'
+        'canceled',
+        'latest', 'for_you', 'following'
     ];
 
     public $data_latest;
@@ -65,8 +67,28 @@ class ShowPosts extends Component
 
     public function confirmed()
     {
-        Post::where('id', $this->postId)->delete();
+        $data = Post::findOrFail($this->postId);
+
+        $path = public_path('storage/images/posts/' . $data->file);
+        File::exists($path) ? File::delete($path) : '';
+        $data->delete();
+
         $this->alert('success', 'Succesfully delete post!');
         $this->emit('getLatestData');
+    }
+
+    public function latest()
+    {
+       $this->getLatestData();
+    }
+
+    public function for_you()
+    {
+        $this->data_latest = Post::with('profiles')->inRandomOrder()->get();
+    }
+
+    public function following()
+    {
+        dd('following');
     }
 }

@@ -44,15 +44,15 @@
     <div
         class="sticky flex justify-between p-3 mb-5 rounded-lg shadow-xl bg-base-200"
         style="margin-top: -3%"
-        x-data="{open : 'for_you'}"
+        x-data="{open : 'latest'}"
         >
         <div class="mx-2">
             <span class="text-xl text-blue-400">Feeds</span>
         </div>
         <div class="mx-2 space-x-4">
-            <span @click.prevent="open = 'for_you'" class="text-lg text-gray-400 cursor-pointer" :class="{'text-blue-400' : open === 'for_you'}">For You</span>
-            <span @click.prevent="open = 'latest'" class="text-lg text-gray-400 cursor-pointer" :class="{'text-blue-400' : open === 'latest'}">Latest</span>
-            <span @click.prevent="open = 'following'" class="text-lg text-gray-400 cursor-pointer" :class="{'text-blue-400' : open === 'following'}">Following</span>
+            <span wire:click='$emit("latest")' @click.prevent="open = 'latest'" class="text-lg text-gray-400 cursor-pointer" :class="{'text-blue-400' : open === 'latest'}">Latest</span>
+            <span wire:click='$emit("for_you")'@click.prevent="open = 'for_you'" class="text-lg text-gray-400 cursor-pointer" :class="{'text-blue-400' : open === 'for_you'}">For You</span>
+            <span wire:click='$emit("following")' @click.prevent="open = 'following'" class="text-lg text-gray-400 cursor-pointer" :class="{'text-blue-400' : open === 'following'}">Following</span>
         </div>
     </div>
  </div>
