@@ -6,15 +6,21 @@ use Livewire\Component;
 use App\Models\Post;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use Jantinnerezo\LivewireAlert\LivewireAlert;
 
 class ShowPosts extends Component
 {
+
+    use LivewireAlert;
+
     protected $listeners = [
-        'getLatestData'
+        'getLatestData',
+        'confirmed',
+        'canceled'
     ];
 
     public $data_latest;
-    public $nameShort;
+    public $nameShort, $postId;
 
     public function mount()
     {
@@ -32,6 +38,7 @@ class ShowPosts extends Component
 
     }
 
+
     public function render()
     {
         return view('livewire.components.posts.show-posts')->extends('layouts.app')->section('content');
@@ -40,5 +47,26 @@ class ShowPosts extends Component
     public function getLatestData()
     {
         $this->data_latest = Post::with('profiles')->orderBy('created_at', 'DESC')->get();
+    }
+
+    public function deletePost($id)
+    {
+        $this->confirm('Are you sure delete this post?', [
+            'toast' => false,
+            'position' => 'center',
+            'showConfirmButton' => true,
+            'cancelButtonText' => 'No',
+            'onConfirmed' => 'confirmed',
+            'onCancelled' => 'cancelled'
+        ]);
+
+        $this->postId = $id;
+    }
+
+    public function confirmed()
+    {
+        Post::where('id', $this->postId)->delete();
+        $this->alert('success', 'Succesfully delete post!');
+        $this->emit('getLatestData');
     }
 }
