@@ -22,7 +22,8 @@
         </div>
 
         <div>
-            <button wire:click='incrementLimit' class="w-full btn btn-outline btn-primary">Load More</button>
+            <button wire:click='loadMore' wire:loading.remove class="w-full btn btn-outline btn-primary">Load More</button>
+            <button wire:loading wire:target='loadMore' class="w-full btn btn-primary" disabled>Load data ... </button>
         </div>
     </div>
 </div>

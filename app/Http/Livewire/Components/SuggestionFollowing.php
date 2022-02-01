@@ -8,12 +8,15 @@ use App\Models\Profile;
 class SuggestionFollowing extends Component
 {
 
-    public $data_following, $limitData = 2;
+    protected $listeners = ['loadMore'];
+
+    public $data_following;
+    public $amount = 2;
 
 
     public function mount()
     {
-        $this->data_following = Profile::inRandomOrder()->limit($this->limitData)->get();
+        $this->getFollowing();
     }
 
     public function render()
@@ -21,8 +24,14 @@ class SuggestionFollowing extends Component
         return view('livewire.components.suggestion-following')->extends('layouts.app')->section('content');
     }
 
-    public function incrementLimit()
+    public function getFollowing()
     {
-        dd('work');
+        $this->data_following = Profile::inRandomOrder()->take($this->amount)->get();
+    }
+
+    public function loadMore()
+    {
+        $this->amount += 2;
+        $this->getFollowing();
     }
 }
