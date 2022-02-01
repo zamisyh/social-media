@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Components;
 
 use App\Models\Follow;
+use App\Models\FollowUser;
 use Livewire\Component;
 use App\Models\Profile;
 use Illuminate\Support\Facades\Auth;
@@ -14,7 +15,7 @@ class SuggestionFollowing extends Component
     use LivewireAlert;
     protected $listeners = ['loadMore'];
 
-    public $data_following, $foll;
+    public $data_following, $foll, $data_follow_user;
     public $amount = 5;
 
 
@@ -45,5 +46,17 @@ class SuggestionFollowing extends Component
         $follow->users()->attach([
             'user_id' => $id
         ]);
+
+        $this->alert('success','Succesfully following user');
+    }
+
+    public function unfollow($id)
+    {
+        $follow = Follow::where('user_id', Auth::user()->id)->first();
+        $follow->users()->detach([
+            'user_id' => $id
+        ]);
+
+        $this->alert('success', 'Successfully unfollow user');
     }
 }
