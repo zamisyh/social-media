@@ -19,7 +19,8 @@
                         </div>
                         <div class="mt-1 button_follow">
                             @php
-                                $data = \App\Models\FollowUser::where('user_id', $item->id)->first();
+                                $foll = \App\Models\Follow::where('user_id', Auth::user()->id)->first();
+                                $data = \App\Models\FollowUser::where('user_id', $item->id)->where('follow_id', $foll->id)->first();
                             @endphp
                             @if (!is_null($data))
                                 <svg xmlns="http://www.w3.org/2000/svg" wire:click='unfollow({{ $item->id }})' class="w-6 h-6 text-red-400" viewBox="0 0 20 20" fill="currentColor">
