@@ -19,7 +19,8 @@ class ShowPosts extends Component
         'getLatestData',
         'confirmed',
         'canceled',
-        'latest', 'for_you', 'following'
+        'latest', 'for_you',
+        'following'
     ];
 
     public $data_latest;
