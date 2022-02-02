@@ -12,7 +12,12 @@
                 @endforeach
             @endforeach
         @else
-            @include('livewire.components.posts.post-content')
+            @if ($item->type == 'private' && $item->profiles->user_id == Auth::user()->id)
+                @include('livewire.components.posts.post-content')
+
+            @elseif ($item->type == 'public')
+                @include('livewire.components.posts.post-content')
+            @endif
         @endif
     @endforeach
 </div>
