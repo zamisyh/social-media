@@ -21,7 +21,7 @@ class Index extends Component
 
     public $nameShort, $bio, $address, $website, $name, $image, $img;
     public $closeModal;
-    public $countPost, $countFollowing;
+    public $countPost, $countFollowing, $countFollowers;
 
     protected $listeners = [
         'update_profile',
@@ -34,6 +34,7 @@ class Index extends Component
         $this->getData();
         $this->getCountPost();
         $this->getCountFollowing();
+        $this->getCountFollowers();
     }
 
     public function render()
@@ -75,6 +76,10 @@ class Index extends Component
         $this->countFollowing = FollowUser::where('follow_id', $data->id)->count();
     }
 
+    public function getCountFollowers()
+    {
+        $this->countFollowers = FollowUser::where('user_id', Auth::user()->id)->count();
+    }
 
     public function getCountPost()
     {
