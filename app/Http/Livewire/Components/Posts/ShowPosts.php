@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Components\Posts;
 
+use App\Models\Follow;
 use Livewire\Component;
 use App\Models\Post;
 use App\Models\User;
@@ -22,7 +23,7 @@ class ShowPosts extends Component
     ];
 
     public $data_latest;
-    public $nameShort, $postId;
+    public $nameShort, $postId, $show_follow;
 
     public function mount()
     {
@@ -80,16 +81,19 @@ class ShowPosts extends Component
 
     public function latest()
     {
-       $this->getLatestData();
+        $this->show_follow = false;
+        $this->getLatestData();
     }
 
     public function for_you()
     {
+        $this->show_follow = false;
         $this->data_latest = Post::with('profiles')->inRandomOrder()->get();
     }
 
     public function following()
     {
-        dd('following');
+        $this->getLatestData();
+        $this->show_follow = true;
     }
 }
