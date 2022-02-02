@@ -49,6 +49,7 @@ class SuggestionFollowing extends Component
 
         $this->alert('success','Succesfully following user');
         $this->emit('getCountFollowing');
+        $this->emit('following');
     }
 
     public function unfollow($id)
@@ -60,5 +61,6 @@ class SuggestionFollowing extends Component
 
         $this->alert('success', 'Successfully unfollow user');
         $this->emit('getCountFollowing');
+        $this->emit('following');
     }
 }
