@@ -24,7 +24,7 @@
             <div class="text-gray-400 text-md title">Followers</div>
         </div>
         <div class="posts">
-            <div class="text-center text-gray-400 text-md number">0</div>
+            <div class="text-center text-gray-400 text-md number">{{ $countFollowing }}</div>
             <div class="text-gray-400 text-md title">Following</div>
         </div>
     </div>

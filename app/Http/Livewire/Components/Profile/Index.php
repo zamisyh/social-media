@@ -11,6 +11,8 @@ use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\WithFileUploads;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
+use App\Models\Follow;
+use App\Models\FollowUser;
 
 class Index extends Component
 {
@@ -19,17 +21,19 @@ class Index extends Component
 
     public $nameShort, $bio, $address, $website, $name, $image, $img;
     public $closeModal;
-    public $countPost;
+    public $countPost, $countFollowing;
 
     protected $listeners = [
         'update_profile',
-        'postCreated'
+        'postCreated',
+        'getCountFollowing'
     ];
 
     public function mount()
     {
         $this->getData();
         $this->getCountPost();
+        $this->getCountFollowing();
     }
 
     public function render()
@@ -64,6 +68,13 @@ class Index extends Component
             'img' => 'file|mimes:png,jpg,jpeg'
         ]);
     }
+
+    public function getCountFollowing()
+    {
+        $data = Follow::where('user_id', Auth::user()->id)->first();
+        $this->countFollowing = FollowUser::where('follow_id', $data->id)->count();
+    }
+
 
     public function getCountPost()
     {
