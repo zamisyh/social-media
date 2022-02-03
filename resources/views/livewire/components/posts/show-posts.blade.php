@@ -17,6 +17,11 @@
 
             @elseif ($item->type == 'public')
                 @include('livewire.components.posts.post-content')
+
+
+            @elseif ($item->type == 'friends')
+                @include('livewire.components.posts.post-content')
+
             @endif
         @endif
     @endforeach
