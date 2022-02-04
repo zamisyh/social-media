@@ -13,15 +13,17 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 use App\Models\Follow;
 use App\Models\FollowUser;
+use Illuminate\Support\Facades\Route;
 
 class Index extends Component
 {
 
     use LivewireAlert, WithFileUploads;
 
-    public $nameShort, $bio, $address, $website, $name, $image, $img;
+    public $nameShort, $bio, $address, $website, $name, $image, $img, $name_user, $email;
     public $closeModal;
     public $countPost, $countFollowing, $countFollowers;
+    public $currentRoute;
 
     protected $listeners = [
         'update_profile',
@@ -35,6 +37,8 @@ class Index extends Component
         $this->getCountPost();
         $this->getCountFollowing();
         $this->getCountFollowers();
+
+        $this->currentRoute = Route::currentRouteName();
     }
 
     public function render()
@@ -59,6 +63,7 @@ class Index extends Component
         $this->address = $data->profiles->address;
         $this->website = $data->profiles->website;
         $this->image = $data->profiles->image;
+        $this->email = $data->email;
         $this->user_id = Auth::user()->id;
 
     }
@@ -130,7 +135,7 @@ class Index extends Component
 
             $this->alert(
                 'success',
-                'Succesfully update profile'
+                'Succesfully update bio'
             );
 
             $this->emit('update_profile');
@@ -139,5 +144,29 @@ class Index extends Component
        } catch (\Exception $e) {
            dd($e->getMessage());
        }
+    }
+
+
+    public function updateProfileName($id)
+    {
+        $this->validate([
+            'name' => 'required|min:4',
+            'email' => 'required|email'
+        ]);
+
+        try {
+            Profile::where('user_id', $id)->update(['name' => $this->name]);
+            User::where('id', $id)->update(['email' => $this->email]);
+
+            $this->alert(
+                'success',
+                'Succesfully update profile'
+            );
+
+            $this->emit('update_profile');
+
+        } catch (\Throwable $th) {
+            //throw $th;
+        }
     }
 }

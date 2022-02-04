@@ -41,9 +41,9 @@
         <div class="mt-2 text-blue-400">
             <a href="#">{{ $website }}</a>
         </div>
-
+        @if ($currentRoute == 'home')
         <div class="mt-5">
-            <label wire:click='$set("closeModal", false)' for="modal_profile" class="w-full btn btn-outline btn-primary modal-button">Edit Profile</label>
+            <label wire:click='$set("closeModal", false)' for="modal_profile" class="w-full btn btn-outline btn-primary modal-button">Edit Bio</label>
             <input type="checkbox" id="modal_profile" class="modal-toggle">
             <div class="modal {{ $closeModal ? 'hidden' : '' }}">
             <div class="modal-box">
@@ -109,5 +109,49 @@
             </div>
             </div>
         </div>
+        @else
+        <div class="mt-5">
+            <label wire:click='$set("closeModal", false)' for="modal_edit_profile" class="w-full btn btn-outline btn-primary modal-button">Edit Profile</label>
+            <input type="checkbox" id="modal_edit_profile" class="modal-toggle">
+            <div class="modal {{ $closeModal ? 'hidden' : '' }}">
+            <div class="modal-box">
+                <div>
+
+                    <div class="form-control">
+                        <label class="label">
+                            <span class="label-text">Name</span>
+                        </label>
+                        <input type="text" wire:model.lazy='name' class="input input-bordered @error('name')
+                            input-error
+                        @enderror">
+                        @error('name')
+                            <span class="text-error">{{ $message }}</span>
+                        @enderror
+                    </div>
+                    <div class="form-control">
+                        <label class="label">
+                            <span class="label-text">Email</span>
+                        </label>
+                        <input type="text" wire:model.lazy='email' class="input input-bordered @error('email')
+                            input-error
+                        @enderror">
+                        @error('email')
+                            <span class="text-error">{{ $message }}</span>
+                        @enderror
+                    </div>
+
+                </div>
+                <div class="modal-action">
+                    <button wire:click='updateProfileName({{ $user_id }})' for="modal_edit_profile" class="btn btn-primary">Accept</button>
+                    <label for="modal_edit_profile" class="btn">Close</label>
+                </div>
+            </div>
+            </div>
+        </div>
+        @endif
+
+
+
+
     </div>
 </div>
