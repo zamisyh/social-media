@@ -6,7 +6,7 @@
             @endphp
             @foreach ($data as $a)
                 @foreach ($a->follow as $f)
-                    @if ($item->profiles->user_id === $f->user_id)
+                    @if ($item->type == 'public' && $item->profiles->user_id === $f->user_id)
                         @include('livewire.components.posts.post-content')
                     @endif
                 @endforeach
