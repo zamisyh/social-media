@@ -2,6 +2,8 @@
 
 namespace App\Http\Livewire\Components\Posts;
 
+use App\Models\Comment;
+use App\Models\CommentPost;
 use App\Models\Follow;
 use App\Models\Like;
 use App\Models\LikePost;
@@ -27,6 +29,7 @@ class ShowPosts extends Component
 
     public $data_latest, $data_like;
     public $nameShort, $postId, $show_follow;
+    public $openFormComment, $comment_text, $data_comment;
 
     public function mount()
     {
@@ -124,6 +127,40 @@ class ShowPosts extends Component
         $like->posts()->detach([
             'post_id' => $id
         ]);
+    }
 
+    public function openComment($id)
+    {
+        $this->data_comment = Comment::with('profiles', 'comment')->orderBy('created_at', 'DESC')->get();
+        $this->openFormComment = true;
+    }
+
+    public function closeComment($id)
+    {
+        $this->openFormComment = false;
+    }
+
+    public function saveComment($id)
+    {
+        $this->validate([
+            'comment_text' => 'required'
+        ]);
+
+        try {
+
+            $comment = Comment::create([
+                'user_id' => Auth::user()->id,
+                'text' => $this->comment_text
+            ]);
+
+            $comment->posts()->attach([
+                'post_id' => $id
+            ]);
+
+            $this->reset(['comment_text']);
+
+        } catch (\Exception $e) {
+            dd($e->getMessage());
+        }
     }
 }
