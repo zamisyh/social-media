@@ -24,7 +24,8 @@ class ShowPosts extends Component
         'confirmed',
         'canceled',
         'latest', 'for_you',
-        'following', 'getCountLike'
+        'following', 'getCountLike',
+        'getLatestComment'
     ];
 
     public $data_latest, $data_like;
@@ -35,6 +36,7 @@ class ShowPosts extends Component
     {
         $this->getLatestData();
         $this->getCountLike();
+        $this->getLatestComment();
 
 
         $data = User::where('id', Auth::user()->id)->with('profiles')->first();
@@ -129,9 +131,14 @@ class ShowPosts extends Component
         ]);
     }
 
-    public function openComment($id)
+    public function getLatestComment()
     {
         $this->data_comment = Comment::with('profiles', 'comment')->orderBy('created_at', 'DESC')->get();
+    }
+
+    public function openComment($id)
+    {
+        $this->getLatestComment();
         $this->openFormComment = true;
     }
 
@@ -158,6 +165,8 @@ class ShowPosts extends Component
             ]);
 
             $this->reset(['comment_text']);
+            $this->emit('getLatestComment');
+
 
         } catch (\Exception $e) {
             dd($e->getMessage());
