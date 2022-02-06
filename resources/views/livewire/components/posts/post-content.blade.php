@@ -74,19 +74,10 @@
                 </svg>
            @endif
             @php
-                $countComment = \App\Models\Comment::with('comment')->get();
-                $count = 0;
-
-                foreach ($countComment as $key => $value) {
-                    foreach ($value->comment as $key2 => $d) {
-                        if ($item->id == $d->post_id) {
-                            $count = $d->count();
-                        }
-                    }
-                }
+                $countComment = \App\Models\CommentPost::where('post_id', $item->id)->count();
             @endphp
 
-           <span class="ml-2">{{ $count }}</span>
+           <span class="ml-2">{{ $countComment }}</span>
         </div>
     </div>
 
