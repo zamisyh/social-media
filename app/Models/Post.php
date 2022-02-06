@@ -15,4 +15,5 @@ class Post extends Model
         return $this->belongsTo(Profile::class, 'user_id', 'id');
     }
 
+
 }

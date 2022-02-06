@@ -35,11 +35,29 @@
 {{ $item->text }}
 </div>
 <div class="flex gap-4 my-5 data_all">
+    @php
+        $like = \App\Models\Like::where('user_id', Auth::user()->id)->first();
+        $post = \App\Models\LikePost::where('post_id', $item->id)->get();
+        $count = \App\Models\LikePost::where('post_id', $item->id)->count();
+
+        $like_id = null;
+        foreach ($post as $key => $value) {
+            $like_id = $value->like_id;
+        }
+    @endphp
     <div class="flex love" role="button">
-        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-        </svg>
-        <span class="ml-2">0</span>
+       @if ($like->id == $like_id && $like->user_id == Auth::user()->id)
+            <svg xmlns="http://www.w3.org/2000/svg" wire:loading.long wire:click='unlikePost({{ $item->id }})' class="w-6 h-6 text-red-500" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clip-rule="evenodd" />
+            </svg>
+       @else
+            <svg wire:loading.long wire:click='likePost({{ $item->id }})' xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+            </svg>
+       @endif
+
+      <span class="ml-2">{{ $count }}</span>
+
     </div>
     <div class="flex chat" role="button">
         <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">

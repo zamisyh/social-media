@@ -8,6 +8,7 @@ use Illuminate\Support\Carbon;
 use Livewire\Component;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use App\Models\Follow;
+use App\Models\Like;
 
 
 
@@ -64,6 +65,10 @@ class Signup extends Component
             ]);
 
             Follow::create([
+                'user_id' => $user->id
+            ]);
+
+            Like::create([
                 'user_id' => $user->id
             ]);
 

@@ -3,6 +3,8 @@
 namespace App\Http\Livewire\Components\Posts;
 
 use App\Models\Follow;
+use App\Models\Like;
+use App\Models\LikePost;
 use Livewire\Component;
 use App\Models\Post;
 use App\Models\User;
@@ -20,15 +22,17 @@ class ShowPosts extends Component
         'confirmed',
         'canceled',
         'latest', 'for_you',
-        'following'
+        'following', 'getCountLike'
     ];
 
-    public $data_latest;
+    public $data_latest, $data_like;
     public $nameShort, $postId, $show_follow;
 
     public function mount()
     {
         $this->getLatestData();
+        $this->getCountLike();
+
 
         $data = User::where('id', Auth::user()->id)->with('profiles')->first();
         $data->profiles->name;
@@ -96,5 +100,30 @@ class ShowPosts extends Component
     {
         $this->getLatestData();
         $this->show_follow = true;
+    }
+
+    public function getCountLike()
+    {
+
+    }
+
+    public function likePost($id)
+    {
+        $like = Like::where('user_id', Auth::user()->id)->first();
+
+        $like->posts()->attach([
+            'post_id' => $id
+        ]);
+
+    }
+
+    public function unlikePost($id)
+    {
+        $like = Like::where('user_id', Auth::user()->id)->first();
+
+        $like->posts()->detach([
+            'post_id' => $id
+        ]);
+
     }
 }
