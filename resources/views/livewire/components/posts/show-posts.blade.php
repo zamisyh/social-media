@@ -9,6 +9,7 @@
                     @if ($item->type == 'public' && $item->profiles->user_id === $f->user_id)
                         @include('livewire.components.posts.post-content')
                     @endif
+
                 @endforeach
             @endforeach
         @else

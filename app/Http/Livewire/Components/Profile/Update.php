@@ -7,6 +7,8 @@ use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Post;
 use Illuminate\Support\Facades\File;
+use App\Models\Like;
+use App\Models\Comment;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 
 class Update extends Component
@@ -17,10 +19,11 @@ class Update extends Component
     protected $listeners = [
         'confirmed',
         'canceled',
-        'getLatestData'
+        'getLatestData', 'getLatestComment'
     ];
 
-    public $name, $gender, $birthday, $age, $data_latest;
+    public $name, $gender, $birthday, $age, $data_latest, $openFormComment;
+    public $comment_text, $data_comment;
 
     public function mount()
     {
@@ -30,6 +33,7 @@ class Update extends Component
         $this->birthday = $data->profiles->birthday;
         $this->age = $data->profiles->age;
         $this->getLatestData();
+
 
 
     }
@@ -69,5 +73,66 @@ class Update extends Component
         $this->alert('success', 'Succesfully delete post!');
         $this->emit('getLatestData');
         $this->emit('postCreated');
+    }
+
+    public function likePost($id)
+    {
+        $like = Like::where('user_id', Auth::user()->id)->first();
+
+        $like->posts()->attach([
+            'post_id' => $id
+        ]);
+
+    }
+
+    public function unlikePost($id)
+    {
+        $like = Like::where('user_id', Auth::user()->id)->first();
+
+        $like->posts()->detach([
+            'post_id' => $id
+        ]);
+    }
+
+    public function getLatestComment()
+    {
+        $this->data_comment = Comment::with('profiles', 'comment')->orderBy('created_at', 'DESC')->get();
+    }
+
+    public function openComment($id)
+    {
+        $this->getLatestComment();
+        $this->openFormComment = $id;
+    }
+
+    public function closeComment($id)
+    {
+        $this->openFormComment = false;
+    }
+
+    public function saveComment($id)
+    {
+        $this->validate([
+            'comment_text' => 'required'
+        ]);
+
+        try {
+
+            $comment = Comment::create([
+                'user_id' => Auth::user()->id,
+                'text' => $this->comment_text
+            ]);
+
+            $comment->posts()->attach([
+                'post_id' => $id
+            ]);
+
+            $this->reset(['comment_text']);
+            $this->emit('getLatestComment');
+
+
+        } catch (\Exception $e) {
+            dd($e->getMessage());
+        }
     }
 }
