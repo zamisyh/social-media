@@ -139,7 +139,7 @@ class ShowPosts extends Component
     public function openComment($id)
     {
         $this->getLatestComment();
-        $this->openFormComment = true;
+        $this->openFormComment = $id;
     }
 
     public function closeComment($id)
